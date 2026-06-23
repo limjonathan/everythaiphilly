@@ -27,23 +27,19 @@ const mobileDrawer = document.getElementById("mobile-drawer");
 const drawerCloseBtn = document.getElementById("drawer-close-btn");
 const drawerOverlay = document.getElementById("drawer-overlay");
 
-// ==========================================
-// INITIALIZATION
-// ==========================================
+// Initialize application on DOM Ready
 document.addEventListener("DOMContentLoaded", () => {
     loadCartFromStorage();
     renderCategoryChips();
     renderMenuItems();
     setupEventListeners();
     updateCartUI();
-    initHyperframes(); // Start the presentation slide scheduler
+    setupScrollSpy();
 });
 
-// ==========================================
-// EVENT LISTENERS Setup
-// ==========================================
+// Event Listeners Configuration
 function setupEventListeners() {
-    // Search inputs
+    // Menu searches
     menuSearchInput.addEventListener("input", (e) => {
         state.searchQuery = e.target.value.trim().toLowerCase();
         toggleClearSearchButton();
@@ -64,40 +60,84 @@ function setupEventListeners() {
     emptyCartBrowse.addEventListener("click", (e) => {
         e.preventDefault();
         toggleCart();
-        showFrame(8); // Switch to the menu frame
+        smoothScrollTo("#menu");
     });
 
-    // Mobile drawer toggles
+    // Mobile menu triggers
     mobileMenuToggle.addEventListener("click", toggleMobileDrawer);
     drawerCloseBtn.addEventListener("click", toggleMobileDrawer);
     drawerOverlay.addEventListener("click", toggleMobileDrawer);
 
-    // Mobile drawer links
-    const drawerLinks = document.querySelectorAll(".drawer-link");
-    drawerLinks.forEach((link, idx) => {
+    // Navigation links anchors hooks
+    const navLinks = document.querySelectorAll(".nav-item, .drawer-link");
+    navLinks.forEach(link => {
         link.addEventListener("click", (e) => {
             e.preventDefault();
-            toggleMobileDrawer();
-            showFrame(idx); // Switch frames based on menu index
+            const targetId = link.getAttribute("href");
+            
+            // Close drawer if open on mobile
+            if (mobileDrawer.classList.contains("open")) {
+                toggleMobileDrawer();
+            }
+            
+            smoothScrollTo(targetId);
         });
     });
 
-    // Desktop slider snaps navigation arrows
+    // Horizontal slider snap scrolling buttons
     const slideLeftBtn = document.getElementById("slide-left-btn");
     const slideRightBtn = document.getElementById("slide-right-btn");
 
     slideLeftBtn.addEventListener("click", () => {
-        menuGrid.scrollBy({ left: -388, behavior: "smooth" });
+        menuGrid.scrollBy({ left: -320, behavior: "smooth" });
     });
 
     slideRightBtn.addEventListener("click", () => {
-        menuGrid.scrollBy({ left: 388, behavior: "smooth" });
+        menuGrid.scrollBy({ left: 320, behavior: "smooth" });
     });
 }
 
-// ==========================================
-// CATEGORIES & MENU CARDS DYNAMICS
-// ==========================================
+// Smooth scrolling engine helper
+function smoothScrollTo(selector) {
+    const target = document.querySelector(selector);
+    if (!target) return;
+    const headerOffset = 100;
+    const elementPosition = target.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+    });
+}
+
+// Scroll Spy implementation for navigation highlighting
+function setupScrollSpy() {
+    const sections = document.querySelectorAll("section");
+    const navItems = document.querySelectorAll(".nav-item");
+
+    window.addEventListener("scroll", () => {
+        let currentSectionId = "";
+        const scrollPosition = window.scrollY + 140;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute("id");
+            }
+        });
+
+        navItems.forEach(item => {
+            item.classList.remove("active");
+            if (item.getAttribute("href") === `#${currentSectionId}`) {
+                item.classList.add("active");
+            }
+        });
+    });
+}
+
+// Render dynamic filter category buttons
 function renderCategoryChips() {
     const categories = ["All", ...new Set(MENU_DATA.map(item => item.category))];
     
@@ -117,6 +157,7 @@ function renderCategoryChips() {
     });
 }
 
+// Render full explorer menu items dynamically
 function renderMenuItems() {
     const filteredItems = MENU_DATA.filter(item => {
         const matchesCategory = state.selectedCategory === "All" || item.category === state.selectedCategory;
@@ -196,9 +237,7 @@ function toggleClearSearchButton() {
     }
 }
 
-// ==========================================
-// CART OPERATIONS
-// ==========================================
+// Shopping Cart Actions
 window.addToCart = function(itemId) {
     const item = MENU_DATA.find(i => i.id === itemId);
     if (!item) return;
@@ -239,7 +278,7 @@ function updateCartUI() {
         document.getElementById("empty-cart-browse").addEventListener("click", (e) => {
             e.preventDefault();
             toggleCart();
-            showFrame(8); // Open the explorer frame
+            smoothScrollTo("#menu");
         });
     } else {
         cartItemsContainer.innerHTML = state.cart.map(item => `
@@ -249,9 +288,9 @@ function updateCartUI() {
                     <span class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</span>
                 </div>
                 <div class="cart-item-qty-control">
-                    <button class="cart-qty-btn" onclick="decreaseQuantity('${item.id}')"><i data-lucide="minus"></i></button>
+                    <button class="cart-qty-btn" onclick="decreaseQuantity('${item.id}')"><i data-lucide="minus" style="width: 14px; height: 14px;"></i></button>
                     <span class="cart-item-qty">${item.quantity}</span>
-                    <button class="cart-qty-btn" onclick="increaseQuantity('${item.id}')"><i data-lucide="plus"></i></button>
+                    <button class="cart-qty-btn" onclick="increaseQuantity('${item.id}')"><i data-lucide="plus" style="width: 14px; height: 14px;"></i></button>
                 </div>
             </div>
         `).join("");
@@ -316,9 +355,7 @@ function toggleMobileDrawer() {
     drawerOverlay.classList.toggle("show");
 }
 
-// ==========================================
-// COORD DETAILS OVERLAY MODALS
-// ==========================================
+// Overlay details modal behaviors
 const dishModal = document.getElementById("dish-modal");
 const dishModalCloseBtn = document.getElementById("dish-modal-close-btn");
 const dishModalOverlay = document.getElementById("dish-modal-overlay");
@@ -338,7 +375,6 @@ window.openDishModal = function(itemId) {
     if (!item) return;
 
     activeModalItemId = itemId;
-    playing = false; // Pause autoplay while reading modal details
 
     if (item.image) {
         dishModalImgContainer.style.backgroundImage = `url('${item.image}')`;
@@ -372,9 +408,6 @@ window.closeDishModal = function() {
     dishModal.classList.remove("open");
     dishModalOverlay.classList.remove("show");
     activeModalItemId = null;
-    playing = true; // Resume slideshow
-    frameStart = Date.now();
-    scheduleNextFrame();
 };
 
 dishModalCloseBtn.addEventListener("click", closeDishModal);
@@ -386,157 +419,3 @@ dishModalAddBtn.addEventListener("click", () => {
         closeDishModal();
     }
 });
-
-// ==========================================
-// CINEMATIC HYPERFRAMES LOGIC
-// ==========================================
-let frames = [];
-let totalFrames = 0;
-let currentFrameIndex = 0;
-let playing = true;
-let frameStart = Date.now();
-let playbackTimer;
-
-const progressIndicator = document.getElementById("progress-indicator");
-const dockCounterVal = document.getElementById("dock-counter-val");
-const dockPrevBtn = document.getElementById("dock-prev-btn");
-const dockNextBtn = document.getElementById("dock-next-btn");
-const dockPlayBtn = document.getElementById("dock-play-btn");
-
-function initHyperframes() {
-    frames = Array.from(document.querySelectorAll(".frame"));
-    totalFrames = frames.length;
-    
-    if (totalFrames === 0) return;
-
-    if (window.innerWidth <= 768) {
-        // Mobile scroll observer for active link highlights (Scroll Spy)
-        window.addEventListener("scroll", () => {
-            let activeIdx = 0;
-            const scrollPos = window.scrollY + 120;
-            frames.forEach((frame, idx) => {
-                if (frame.offsetTop <= scrollPos) {
-                    activeIdx = idx;
-                }
-            });
-            updateNavIndicators(activeIdx);
-        });
-        return; // Bypass desktop slider scheduler and events
-    }
-
-    // Attach navigation dock event listeners
-    dockPrevBtn.addEventListener("click", () => showFrame(currentFrameIndex - 1));
-    dockNextBtn.addEventListener("click", () => showFrame(currentFrameIndex + 1));
-    dockPlayBtn.addEventListener("click", togglePlayback);
-
-    // Keyboard Arrow Keys
-    document.addEventListener("keydown", (e) => {
-        // Block during typing searches or modal display
-        if (document.activeElement.tagName === "INPUT" || activeModalItemId) return;
-        
-        if (e.key === "ArrowRight") {
-            showFrame(currentFrameIndex + 1);
-        } else if (e.key === "ArrowLeft") {
-            showFrame(currentFrameIndex - 1);
-        } else if (e.key === " ") {
-            e.preventDefault();
-            togglePlayback();
-        }
-    });
-
-    // Mouse Scroll Wheel frame controller
-    let lastWheelTime = 0;
-    document.addEventListener("wheel", (e) => {
-        if (activeModalItemId || cartSidebar.classList.contains("open")) return;
-        
-        const now = Date.now();
-        if (now - lastWheelTime < 1000) return; // Debounce triggers
-
-        if (e.deltaY > 30) {
-            showFrame(currentFrameIndex + 1);
-            lastWheelTime = now;
-        } else if (e.deltaY < -30) {
-            showFrame(currentFrameIndex - 1);
-            lastWheelTime = now;
-        }
-    });
-
-    showFrame(0);
-    tickProgress();
-}
-
-function updateNavIndicators(index) {
-    const navItems = document.querySelectorAll(".nav-item");
-    navItems.forEach(item => {
-        const frameLinkIndex = Number(item.getAttribute("data-frame"));
-        if (frameLinkIndex === 0 && index === 0) {
-            item.classList.add("active");
-        } else if (frameLinkIndex === 1 && index >= 1 && index <= 7) {
-            item.classList.add("active");
-        } else if (frameLinkIndex === 8 && index === 8) {
-            item.classList.add("active");
-        } else if (frameLinkIndex === 9 && index === 9) {
-            item.classList.add("active");
-        } else {
-            item.classList.remove("active");
-        }
-    });
-}
-
-window.showFrame = function(n) {
-    if (totalFrames === 0) return;
-    
-    currentFrameIndex = (n + totalFrames) % totalFrames;
-
-    if (window.innerWidth <= 768) {
-        const targetFrame = document.getElementById(`frame-${currentFrameIndex}`);
-        if (targetFrame) {
-            targetFrame.scrollIntoView({ behavior: "smooth" });
-        }
-        updateNavIndicators(currentFrameIndex);
-        return;
-    }
-
-    // Toggle active frame classes
-    frames.forEach((frame, idx) => {
-        frame.classList.toggle("active", idx === currentFrameIndex);
-    });
-
-    updateNavIndicators(currentFrameIndex);
-
-    // Update counter dock text
-    dockCounterVal.textContent = 
-        String(currentFrameIndex + 1).padStart(2, "0") + " / " + String(totalFrames).padStart(2, "0");
-
-    frameStart = Date.now();
-    if (playing) scheduleNextFrame();
-};
-
-function scheduleNextFrame() {
-    clearTimeout(playbackTimer);
-    if (!playing) return;
-    const duration = Number(frames[currentFrameIndex].dataset.duration) || 5000;
-    playbackTimer = setTimeout(() => showFrame(currentFrameIndex + 1), duration);
-}
-
-function togglePlayback() {
-    playing = !playing;
-    dockPlayBtn.textContent = playing ? "⏸" : "▶";
-    if (playing) {
-        frameStart = Date.now();
-        scheduleNextFrame();
-    } else {
-        clearTimeout(playbackTimer);
-    }
-}
-
-function tickProgress() {
-    if (playing && totalFrames > 0) {
-        const duration = Number(frames[currentFrameIndex].dataset.duration) || 5000;
-        const pct = Math.min(1, (Date.now() - frameStart) / duration) * 100;
-        progressIndicator.style.width = pct + "%";
-    } else if (!playing) {
-        progressIndicator.style.width = "0%";
-    }
-    requestAnimationFrame(tickProgress);
-}
