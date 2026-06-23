@@ -479,13 +479,13 @@ section {
     transition: transform 0.6s var(--ease-vanguard);
 }
 
-.dish-pork-spring-roll { background-image: url('assets/foods.jpeg'); }
-.dish-pad-thai { background-image: url('assets/nood.webp'); }
-.dish-green-curry { background-image: url('assets/green.webp'); }
-.dish-red-curry { background-image: url('assets/reds.webp'); }
-.dish-tom-yum { background-image: url('assets/red.webp'); }
-.dish-thai-fried-rice { background-image: url('assets/rice.webp'); }
-.dish-curry-noodle-soup { background-image: url('assets/duck.webp'); }
+.dish-pork-spring-roll { background-image: url('assets/spring_roll_premium.jpg'); }
+.dish-pad-thai { background-image: url('assets/pad_thai_premium.jpg'); }
+.dish-green-curry { background-image: url('assets/green_curry_premium.jpg'); }
+.dish-red-curry { background-image: url('assets/red_curry_premium.jpg'); }
+.dish-tom-yum { background-image: url('assets/tom_yum_premium.jpg'); }
+.dish-thai-fried-rice { background-image: url('assets/thai_fried_rice_premium.jpg'); }
+.dish-curry-noodle-soup { background-image: url('assets/curry_noodle_premium.jpg'); }
 
 .dish-card:hover .dish-visual {
     transform: scale(1.05);
@@ -1352,5 +1352,121 @@ section {
     
     .dish-modal-header h2 {
         font-size: 2rem;
+    }
+}
+
+/* ==========================================================================
+   GOOGLE REVIEWS SECTION
+   ========================================================================== */
+.reviews-section {
+    background-color: rgba(18, 18, 23, 0.2);
+    border-top: 1px solid var(--clr-border-hairline);
+    border-bottom: 1px solid var(--clr-border-hairline);
+}
+
+.reviews-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.review-card {
+    background-color: var(--clr-surface-core);
+    border: 1px solid var(--clr-border-hairline);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s ease;
+}
+
+.review-card:hover {
+    border-color: var(--clr-border-active);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 179, 0, 0.04);
+}
+
+.review-rating {
+    display: flex;
+    gap: 4px;
+}
+
+.star-filled {
+    width: 18px;
+    height: 18px;
+    fill: var(--clr-primary);
+    stroke: var(--clr-primary);
+}
+
+.review-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--clr-text-light);
+    font-style: italic;
+    flex-grow: 1;
+}
+
+.review-author {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--clr-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   LOGO & SOCIAL MEDIA ENHANCEMENTS
+   ========================================================================== */
+.logo img, .footer-logo img {
+    height: 48px !important;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: screen; /* Crops pure black background transparently */
+    filter: brightness(1.1) contrast(1.1);
+    transition: transform 0.3s var(--ease-vanguard);
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+}
+
+.mobile-drawer .logo img {
+    height: 40px !important;
+    mix-blend-mode: screen;
+}
+
+/* Restore missing contrast for social icons */
+.social-links-row a {
+    color: var(--clr-text-light) !important;
+    border: 1px solid var(--clr-border-hairline);
+}
+
+.social-links-row a i {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s var(--ease-vanguard);
+}
+
+.social-links-row a:hover i {
+    transform: scale(1.1);
+}
+
+/* Responsive fixes for reviews grid and map */
+@media (max-width: 768px) {
+    .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .contact-map-container {
+        grid-column: span 1 !important;
+        height: 280px;
+    }
+    
+    .contact-map-container iframe {
+        height: 280px !important;
     }
 }

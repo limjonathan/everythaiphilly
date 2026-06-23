@@ -187,7 +187,7 @@ function renderMenuItems() {
 
         return `
             <div class="menu-card menu-card-outer" data-item-id="${item.id}">
-                ${item.image ? `<div class="card-visual" style="background-image: url('${item.image}')"></div>` : ''}
+                ${item.image ? `<img class="card-visual" src="${item.image}" alt="${item.name}" loading="lazy" style="width: 100%; object-fit: cover;">` : ''}
                 <div class="card-top">
                     <div class="card-header">
                         <h3 class="card-title">${item.name}</h3>
@@ -382,10 +382,10 @@ window.openDishModal = function(itemId) {
         dishModalImgContainer.style.backgroundColor = "var(--clr-surface-core)";
     }
 
-    dishModalCategory.textContent = item.category;
+    dishModalCategory.textContent = item.category || "General";
     dishModalName.textContent = item.name;
-    dishModalPrice.textContent = `$${item.price.toFixed(2)}${item.hasAddons ? '+' : ''}`;
-    dishModalDesc.textContent = item.description;
+    dishModalPrice.textContent = `$${(item.price || 0).toFixed(2)}${item.hasAddons ? '+' : ''}`;
+    dishModalDesc.textContent = item.description || "";
 
     if (item.hasAddons) {
         dishModalOptions.style.display = "block";
@@ -393,7 +393,8 @@ window.openDishModal = function(itemId) {
         dishModalOptions.style.display = "none";
     }
 
-    dishModalTags.innerHTML = item.tags.map(tag => {
+    const tags = item.tags || [];
+    dishModalTags.innerHTML = tags.map(tag => {
         const tagClass = `tag-${tag.toLowerCase()}`;
         return `<span class="tag ${tagClass}">${tag}</span>`;
     }).join("");
