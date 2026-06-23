@@ -1,7 +1,7 @@
-import tomYumImg from './assets/tom-yum.jpg';
-import greenCurryImg from './assets/green-curry.jpg';
-import padThaiImg from './assets/pad-thai.jpg';
-import mangoStickyRiceImg from './assets/mango-sticky-rice.jpg';
+const tomYumImg = './assets/tom-yum.jpg';
+const greenCurryImg = './assets/green-curry.jpg';
+const padThaiImg = './assets/pad-thai.jpg';
+const mangoStickyRiceImg = './assets/mango-sticky-rice.jpg';
 
 export const MENU_DATA = [
     // APPETIZERS
