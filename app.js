@@ -186,24 +186,22 @@ function renderMenuItems() {
         const optionIndicator = item.hasAddons ? '<span class="price-add-on">+</span>' : '';
 
         return `
-            <div class="double-bezel-outer menu-card-outer" data-item-id="${item.id}">
-                <div class="double-bezel-inner menu-card-inner">
-                    ${item.image ? `<div class="card-visual" style="background-image: url('${item.image}')"></div>` : ''}
-                    <div class="card-top">
-                        <div class="card-header">
-                            <h3 class="card-title">${item.name}</h3>
-                            <span class="card-price">$${item.price.toFixed(2)}${optionIndicator}</span>
-                        </div>
-                        <p class="card-desc">${item.description}</p>
+            <div class="menu-card menu-card-outer" data-item-id="${item.id}">
+                ${item.image ? `<div class="card-visual" style="background-image: url('${item.image}')"></div>` : ''}
+                <div class="card-top">
+                    <div class="card-header">
+                        <h3 class="card-title">${item.name}</h3>
+                        <span class="card-price">$${item.price.toFixed(2)}${optionIndicator}</span>
                     </div>
-                    <div class="card-footer">
-                        <div class="card-tags">
-                            ${tagHTML}
-                        </div>
-                        <button class="add-btn-round" aria-label="Add ${item.name} to order" data-action="add">
-                            <i data-lucide="plus" stroke-width="1.5"></i>
-                        </button>
+                    <p class="card-desc">${item.description}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="card-tags">
+                        ${tagHTML}
                     </div>
+                    <button class="add-btn-round" aria-label="Add ${item.name} to order" data-action="add">
+                        <i data-lucide="plus" stroke-width="1.5"></i>
+                    </button>
                 </div>
             </div>
         `;
