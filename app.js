@@ -409,6 +409,21 @@ function initHyperframes() {
     
     if (totalFrames === 0) return;
 
+    if (window.innerWidth <= 768) {
+        // Mobile scroll observer for active link highlights (Scroll Spy)
+        window.addEventListener("scroll", () => {
+            let activeIdx = 0;
+            const scrollPos = window.scrollY + 120;
+            frames.forEach((frame, idx) => {
+                if (frame.offsetTop <= scrollPos) {
+                    activeIdx = idx;
+                }
+            });
+            updateNavIndicators(activeIdx);
+        });
+        return; // Bypass desktop slider scheduler and events
+    }
+
     // Attach navigation dock event listeners
     dockPrevBtn.addEventListener("click", () => showFrame(currentFrameIndex - 1));
     dockNextBtn.addEventListener("click", () => showFrame(currentFrameIndex + 1));
@@ -450,33 +465,44 @@ function initHyperframes() {
     tickProgress();
 }
 
+function updateNavIndicators(index) {
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach(item => {
+        const frameLinkIndex = Number(item.getAttribute("data-frame"));
+        if (frameLinkIndex === 0 && index === 0) {
+            item.classList.add("active");
+        } else if (frameLinkIndex === 1 && index >= 1 && index <= 7) {
+            item.classList.add("active");
+        } else if (frameLinkIndex === 8 && index === 8) {
+            item.classList.add("active");
+        } else if (frameLinkIndex === 9 && index === 9) {
+            item.classList.add("active");
+        } else {
+            item.classList.remove("active");
+        }
+    });
+}
+
 window.showFrame = function(n) {
     if (totalFrames === 0) return;
     
     currentFrameIndex = (n + totalFrames) % totalFrames;
+
+    if (window.innerWidth <= 768) {
+        const targetFrame = document.getElementById(`frame-${currentFrameIndex}`);
+        if (targetFrame) {
+            targetFrame.scrollIntoView({ behavior: "smooth" });
+        }
+        updateNavIndicators(currentFrameIndex);
+        return;
+    }
 
     // Toggle active frame classes
     frames.forEach((frame, idx) => {
         frame.classList.toggle("active", idx === currentFrameIndex);
     });
 
-    // Update navbar indicators
-    const navItems = document.querySelectorAll(".nav-item");
-    navItems.forEach(item => {
-        const frameLinkIndex = Number(item.getAttribute("data-frame"));
-        // Highlight active headers based on frame matching groups
-        if (frameLinkIndex === 0 && currentFrameIndex === 0) {
-            item.classList.add("active");
-        } else if (frameLinkIndex === 1 && currentFrameIndex >= 1 && currentFrameIndex <= 7) {
-            item.classList.add("active");
-        } else if (frameLinkIndex === 8 && currentFrameIndex === 8) {
-            item.classList.add("active");
-        } else if (frameLinkIndex === 9 && currentFrameIndex === 9) {
-            item.classList.add("active");
-        } else {
-            item.classList.remove("active");
-        }
-    });
+    updateNavIndicators(currentFrameIndex);
 
     // Update counter dock text
     dockCounterVal.textContent = 

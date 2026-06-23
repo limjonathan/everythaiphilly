@@ -1491,8 +1491,57 @@ p {
         gap: 32px;
     }
     
+    /* ------------------------------------------
+       HYBRID RESPONSIVE LAYOUT OVERRIDES
+       ------------------------------------------ */
+    .progress-bar {
+        display: none !important;
+    }
+
     .playback-controls-dock {
-        bottom: 24px;
-        padding: 8px 16px;
+        display: none !important;
+    }
+
+    .frames-wrapper {
+        position: static;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+
+    .frame {
+        position: relative;
+        inset: auto;
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        padding: 100px 16px 60px 16px;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        pointer-events: auto !important;
+        z-index: auto !important;
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center;
+        border-bottom: 1px solid var(--clr-border-hairline);
+    }
+
+    .ambient-glow {
+        display: none !important;
+    }
+
+    .show-detail-layout {
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .show-detail-text {
+        max-width: 100%;
+    }
+
+    .slide-ctas {
+        justify-content: center;
     }
 }
