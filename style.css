@@ -1444,13 +1444,13 @@ section {
     border: 1px solid var(--clr-border-hairline);
 }
 
-.social-links-row a i {
+.social-links-row a svg, .social-links-row a i {
     width: 18px;
     height: 18px;
     transition: transform 0.3s var(--ease-vanguard);
 }
 
-.social-links-row a:hover i {
+.social-links-row a:hover svg, .social-links-row a:hover i {
     transform: scale(1.1);
 }
 
