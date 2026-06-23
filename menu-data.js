@@ -160,7 +160,7 @@ export const MENU_DATA = [
         description: "Premium rice noodles in large tom yum broth with boiled egg, bean sprouts, onion, mushrooms, galangal, basil, cilantro, scallions, and lime leaves.",
         tags: ["Mild"],
         hasAddons: true,
-        image: "/assets/tom-yum.jpg"
+        image: "assets/tom-yum.jpg"
     },
     {
         id: "coconut-noodle-soup",
@@ -208,7 +208,7 @@ export const MENU_DATA = [
         description: "Green curry paste, coconut milk, bamboo shoot, bell pepper, green pepper, green bean, eggplant, and fresh basil.",
         tags: ["Mild"],
         hasAddons: true,
-        image: "/assets/green-curry.jpg"
+        image: "assets/green-curry.jpg"
     },
     {
         id: "red-curry",
@@ -294,7 +294,7 @@ export const MENU_DATA = [
         description: "Thin noodle, egg, bean sprouts, peanut, scallion, red onion, and tofu.",
         tags: [],
         hasAddons: true,
-        image: "/assets/pad-thai.jpg"
+        image: "assets/pad-thai.jpg"
     },
     {
         id: "drunken-noodle",
@@ -405,7 +405,7 @@ export const MENU_DATA = [
         price: 6.60,
         description: "Fresh sweet mango slices with warm steamed coconut sticky rice.",
         tags: ["Vegetarian", "Vegan"],
-        image: "/assets/mango-sticky-rice.jpg"
+        image: "assets/mango-sticky-rice.jpg"
     },
     {
         id: "banana-dumpling",
