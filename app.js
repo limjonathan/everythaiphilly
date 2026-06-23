@@ -3,15 +3,13 @@
 // Global Application State
 const state = {
     selectedCategory: "All",
-    searchQuery: "",
     cart: []
 };
 
 // DOM Elements
 const menuGrid = document.getElementById("menu-grid");
 const categoriesContainer = document.getElementById("categories-container");
-const menuSearchInput = document.getElementById("menu-search-input");
-const clearSearchBtn = document.getElementById("clear-search-btn");
+// Search logic removed
 
 const cartToggleBtn = document.getElementById("cart-toggle-btn");
 const cartSidebar = document.getElementById("cart-sidebar");
@@ -39,19 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Event Listeners Configuration
 function setupEventListeners() {
-    // Menu searches
-    menuSearchInput.addEventListener("input", (e) => {
-        state.searchQuery = e.target.value.trim().toLowerCase();
-        toggleClearSearchButton();
-        renderMenuItems();
-    });
-
-    clearSearchBtn.addEventListener("click", () => {
-        menuSearchInput.value = "";
-        state.searchQuery = "";
-        clearSearchBtn.style.display = "none";
-        renderMenuItems();
-    });
+    // Menu searches removed
 
     // Cart toggles
     cartToggleBtn.addEventListener("click", toggleCart);
@@ -161,9 +147,7 @@ function renderCategoryChips() {
 function renderMenuItems() {
     const filteredItems = MENU_DATA.filter(item => {
         const matchesCategory = state.selectedCategory === "All" || item.category === state.selectedCategory;
-        const matchesSearch = item.name.toLowerCase().includes(state.searchQuery) || 
-                              item.description.toLowerCase().includes(state.searchQuery);
-        return matchesCategory && matchesSearch;
+        return matchesCategory;
     });
 
     if (filteredItems.length === 0) {
@@ -173,7 +157,7 @@ function renderMenuItems() {
                 <p>No dishes found matching your criteria.</p>
             </div>
         `;
-        lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
         return;
     }
 
@@ -207,7 +191,7 @@ function renderMenuItems() {
         `;
     }).join("");
 
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
 
     // Trigger details modal on card clicks (except addition button)
     const cards = menuGrid.querySelectorAll(".menu-card-outer");
@@ -227,13 +211,7 @@ function renderMenuItems() {
     });
 }
 
-function toggleClearSearchButton() {
-    if (state.searchQuery.length > 0) {
-        clearSearchBtn.style.display = "block";
-    } else {
-        clearSearchBtn.style.display = "none";
-    }
-}
+// toggleClearSearchButton removed
 
 // Shopping Cart Actions
 window.addToCart = function(itemId) {
@@ -294,7 +272,7 @@ function updateCartUI() {
         `).join("");
     }
 
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
 }
 
 window.decreaseQuantity = function(itemId) {
@@ -334,18 +312,20 @@ function animateCartBadge() {
 }
 
 function loadCartFromStorage() {
-    const stored = localStorage.getItem("every_thai_cart");
-    if (stored) {
-        try {
+    try {
+        const stored = localStorage.getItem("every_thai_cart");
+        if (stored) {
             state.cart = JSON.parse(stored);
-        } catch (e) {
-            state.cart = [];
         }
+    } catch (e) {
+        state.cart = [];
     }
 }
 
 function saveCartToStorage() {
-    localStorage.setItem("every_thai_cart", JSON.stringify(state.cart));
+    try {
+        localStorage.setItem("every_thai_cart", JSON.stringify(state.cart));
+    } catch(e) {}
 }
 
 function toggleMobileDrawer() {
