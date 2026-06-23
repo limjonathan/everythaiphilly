@@ -1,0 +1,14 @@
+{
+  "name": "everythaiphilly-website",
+  "version": "1.0.0",
+  "description": "Premium restaurant website for Every Thai Philly",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y vite",
+    "build": "npx -y vite build",
+    "preview": "npx -y vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Every Thai — Authentic Thai Cuisine, Elevated</title>
+    <meta name="description" content="Embark on a fluid, cinematic journey through the elevated flavors of Thailand. Experience premium street noodles, hand-crafted curries, and traditional recipes.">
+    <!-- Google Fonts: Cormorant Garamond (Luxury Serif) & Plus Jakarta Sans (Geometric Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons (Lucide Icons) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Playback Progress Bar -->
+    <div class="progress-bar" id="progress-indicator"></div>
+
+    <!-- Background Ambient Glows -->
+    <div class="ambient-glow glow-top-right"></div>
+    <div class="ambient-glow glow-mid-left"></div>
+
+    <!-- Fixed Floating Glass Navbar -->
+    <header class="nav-pill-wrapper">
+        <div class="nav-pill-container">
+            <a href="#" class="logo" style="display: flex; align-items: center;" onclick="showFrame(0)">
+                <img src="/assets/FullLogo.avif" alt="Every Thai Logo" style="height: 38px; width: auto; object-fit: contain;">
+            </a>
+            
+            <nav class="nav-links-desktop">
+                <a href="javascript:showFrame(0)" class="nav-item active" data-frame="0">Home</a>
+                <a href="javascript:showFrame(1)" class="nav-item" data-frame="1">Dishes</a>
+                <a href="javascript:showFrame(8)" class="nav-item" data-frame="8">Full Menu</a>
+                <a href="javascript:showFrame(9)" class="nav-item" data-frame="9">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="cart-pill-btn" id="cart-toggle-btn" aria-label="Open cart">
+                    <i data-lucide="shopping-bag" stroke-width="1.5"></i>
+                    <span class="badge" id="cart-badge-count">0</span>
+                </button>
+                <a href="https://order.online/store/25852624?pickup=true&redirected=true" target="_blank" rel="noopener noreferrer" class="btn btn-pill-order">
+                    <span>Order Online</span>
+                    <span class="btn-arrow-circle"><i data-lucide="arrow-up-right" stroke-width="1.5"></i></span>
+                </a>
+                <button class="mobile-toggle-btn" id="mobile-menu-toggle" aria-label="Toggle menu">
+                    <i data-lucide="menu" stroke-width="1.5"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="drawer-header">
+            <span class="logo" style="display: flex; align-items: center;">
+                <img src="/assets/FullLogo.avif" alt="Every Thai Logo" style="height: 34px; width: auto; object-fit: contain;">
+            </span>
+            <button class="drawer-close" id="drawer-close-btn" aria-label="Close menu">
+                <i data-lucide="x" stroke-width="1.5"></i>
+            </button>
+        </div>
+        <nav class="drawer-nav">
+            <a href="javascript:showFrame(0)" class="drawer-link">Home</a>
+            <a href="javascript:showFrame(1)" class="drawer-link">Dishes</a>
+            <a href="javascript:showFrame(8)" class="drawer-link">Full Menu</a>
+            <a href="javascript:showFrame(9)" class="drawer-link">Contact</a>
+            <a href="https://order.online/store/25852624?pickup=true&redirected=true" target="_blank" rel="noopener noreferrer" class="btn btn-pill-order w-full text-center">
+                <span>Order Online</span>
+                <span class="btn-arrow-circle"><i data-lucide="arrow-up-right" stroke-width="1.5"></i></span>
+            </a>
+        </nav>
+    </div>
+    <div class="overlay" id="drawer-overlay"></div>
+
+    <!-- ==========================================
+         CINEMATIC FRAMES (HYPERFRAMES SYSTEM)
+         ========================================== -->
+    <div class="frames-wrapper">
+        
+        <!-- FRAME 01: Hero Intro -->
+        <section class="frame active" data-duration="6000" id="frame-0">
+            <div class="frame-content hero-slide-layout text-center">
+                <span class="eyebrow-tag">PHILADELPHIA, PA</span>
+                <h1 class="hero-main-title">Authentic Thai.<br><span class="serif-italic">Elevated.</span></h1>
+                <p class="hero-body-text" style="margin: 0 auto 40px auto">A culinary journey through the flavors of Thailand, crafted with passion. Explore menu highlights and customized options in a fluid visual landscape.</p>
+                <div class="hero-cta-group" style="justify-content: center">
+                    <button class="btn btn-pill-primary" onclick="showFrame(1)">
+                        <span>Begin Journey</span>
+                        <span class="btn-arrow-circle"><i data-lucide="arrow-right" stroke-width="1.5"></i></span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 02: Pork Spring Roll Showcase -->
+        <section class="frame" data-duration="6000" id="frame-1" style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('/assets/foods.jpeg'); background-size: cover; background-position: center;">
+            <div class="frame-content show-detail-layout">
+                <div class="show-detail-text">
+                    <span class="eyebrow-tag">Appetizers Classic</span>
+                    <h2>Pork Spring Roll</h2>
+                    <p class="slide-price">$6.82</p>
+                    <p class="slide-desc">Crispy golden shells filled with ground pork, shredded cabbage, sweet carrots, and glass noodles, deep fried to perfection and served with our signature sweet chili dip.</p>
+                    <div class="slide-ctas">
+                        <button class="btn btn-pill-primary" onclick="addToCart('pork-spring-roll')">
+                            <span>Quick Add to Cart</span>
+                            <span class="btn-arrow-circle"><i data-lucide="plus" stroke-width="1.5"></i></span>
+                        </button>
+                        <button class="btn btn-pill-secondary" onclick="openDishModal('pork-spring-roll')">
+                            <span>View Full Details</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 03: Pad Thai Showcase -->
+        <section class="frame" data-duration="6000" id="frame-2" style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('/assets/nood.webp'); background-size: cover; background-position: center;">
+            <div class="frame-content show-detail-layout">
+                <div class="show-detail-text">
+                    <span class="eyebrow-tag">Noodles Specialty</span>
+                    <h2>Freshly Tossed Pad Thai</h2>
+                    <p class="slide-price">$14.52</p>
+                    <p class="slide-desc">Premium thin rice noodles, scrambled egg, bean sprouts, crushed peanuts, scallions, red onion, and fresh tofu sautéed in traditional sweet tamarind reduction.</p>
+                    <div class="slide-ctas">
+                        <button class="btn btn-pill-primary" onclick="addToCart('pad-thai')">
+                            <span>Quick Add to Cart</span>
+                            <span class="btn-arrow-circle"><i data-lucide="plus" stroke-width="1.5"></i></span>
+                        </button>
+                        <button class="btn btn-pill-secondary" onclick="openDishModal('pad-thai')">
+                            <span>View Full Details</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 04: Green Curry Showcase -->
+        <section class="frame" data-duration="6000" id="frame-3" style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('/assets/green.webp'); background-size: cover; background-position: center;">
+            <div class="frame-content show-detail-layout">
+                <div class="show-detail-text">
+                    <span class="eyebrow-tag">Aromatic Curry</span>
+                    <h2>Thai Green Curry</h2>
+                    <p class="slide-price">$14.85</p>
+                    <p class="slide-desc">Fragrant green curry paste simmered in creamy coconut milk with bamboo shoots, bell peppers, fresh green beans, eggplant, and sweet basil leaves.</p>
+                    <div class="slide-ctas">
+                        <button class="btn btn-pill-primary" onclick="addToCart('green-curry')">
+                            <span>Quick Add to Cart</span>
+                            <span class="btn-arrow-circle"><i data-lucide="plus" stroke-width="1.5"></i></span>
+                        </button>
+                        <button class="btn btn-pill-secondary" onclick="openDishModal('green-curry')">
+                            <span>View Full Details</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 05: Red Curry Showcase -->
+        <section class="frame" data-duration="6000" id="frame-4" style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('/assets/reds.webp'); background-size: cover; background-position: center;">
+            <div class="frame-content show-detail-layout">
+                <div class="show-detail-text">
+                    <span class="eyebrow-tag">Aromatic Curry</span>
+                    <h2>Thai Red Curry</h2>
+                    <p class="slide-price">$14.85</p>
+                    <p class="slide-desc">Traditional red curry chili paste simmered in rich coconut milk, loaded with bamboo shoots, sweet bell peppers, crisp green beans, tender eggplant, and fresh basil leaves.</p>
+                    <div class="slide-ctas">
+                        <button class="btn btn-pill-primary" onclick="addToCart('red-curry')">
+                            <span>Quick Add to Cart</span>
+                            <span class="btn-arrow-circle"><i data-lucide="plus" stroke-width="1.5"></i></span>
+                        </button>
+                        <button class="btn btn-pill-secondary" onclick="openDishModal('red-curry')">
+                            <span>View Full Details</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 06: Tom Yum Showcase -->
+        <section class="frame" data-duration="6000" id="frame-5" style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('/assets/red.webp'); background-size: cover; background-position: center;">
+            <div class="frame-content show-detail-layout">
+                <div class="show-detail-text">
+                    <span class="eyebrow-tag">Savory Noodle Soup</span>
+                    <h2>Tom Yum Noodle Soup</h2>
+                    <p class="slide-price">$17.93</p>
+                    <p class="slide-desc">Premium rice noodles inside a large, lemongrass-infused spicy and sour broth, garnished with a boiled egg, bean sprouts, red onions, mushrooms, and fresh cilantro.</p>
+                    <div class="slide-ctas">
+                        <button class="btn btn-pill-primary" onclick="addToCart('tom-yum-noodle-soup')">
+                            <span>Quick Add to Cart</span>
+                            <span class="btn-arrow-circle"><i data-lucide="plus" stroke-width="1.5"></i></span>
+                        </button>
+                        <button class="btn btn-pill-secondary" onclick="openDishModal('tom-yum-noodle-soup')">
+                            <span>View Full Details</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 07: Thai Fried Rice Showcase -->
+        <section class="frame" data-duration="6000" id="frame-6" style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('/assets/rice.webp'); background-size: cover; background-position: center;">
+            <div class="frame-content show-detail-layout">
+                <div class="show-detail-text">
+                    <span class="eyebrow-tag">Traditional Rice</span>
+                    <h2>Thai Fried Rice</h2>
+                    <p class="slide-price">$14.52</p>
+                    <p class="slide-desc">Savory jasmine rice stir-fried over high flame with fresh egg, onions, juicy tomatoes, Chinese broccoli, sweet scallions, and fragrant cilantro.</p>
+                    <div class="slide-ctas">
+                        <button class="btn btn-pill-primary" onclick="addToCart('thai-fried-rice')">
+                            <span>Quick Add to Cart</span>
+                            <span class="btn-arrow-circle"><i data-lucide="plus" stroke-width="1.5"></i></span>
+                        </button>
+                        <button class="btn btn-pill-secondary" onclick="openDishModal('thai-fried-rice')">
+                            <span>View Full Details</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 08: Curry Noodle Soup Showcase -->
+        <section class="frame" data-duration="6000" id="frame-7" style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('/assets/duck.webp'); background-size: cover; background-position: center;">
+            <div class="frame-content show-detail-layout">
+                <div class="show-detail-text">
+                    <span class="eyebrow-tag">Noodle Soup Classic</span>
+                    <h2>Curry Noodle Soup</h2>
+                    <p class="slide-price">$17.05</p>
+                    <p class="slide-desc">Premium rice noodles submerged in a rich and aromatic Thai curry broth, customized with your favorite protein choice, fresh veggies, and fresh herbs.</p>
+                    <div class="slide-ctas">
+                        <button class="btn btn-pill-primary" onclick="addToCart('curry-noodle-soup')">
+                            <span>Quick Add to Cart</span>
+                            <span class="btn-arrow-circle"><i data-lucide="plus" stroke-width="1.5"></i></span>
+                        </button>
+                        <button class="btn btn-pill-secondary" onclick="openDishModal('curry-noodle-soup')">
+                            <span>View Full Details</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 09: Full Menu Explorer -->
+        <section class="frame full-menu-slide" data-duration="10000" id="frame-8">
+            <div class="frame-content menu-explorer-layout">
+                <div class="section-header text-center" style="margin-bottom: 24px;">
+                    <span class="eyebrow-tag">Culinary Collections</span>
+                    <h2 class="section-title" style="font-size: 2.8rem; margin-bottom: 8px;">The Culinary Menu</h2>
+                    <p class="section-desc" style="font-size: 0.9rem; margin-bottom: 16px;">Select a category below or search to explore our complete offerings.</p>
+                </div>
+
+                <!-- Controls (Search + Filters) -->
+                <div class="menu-controls" style="margin-bottom: 24px;">
+                    <div class="search-bar-outer">
+                        <div class="search-bar-inner">
+                            <i data-lucide="search" class="search-icon" stroke-width="1.5"></i>
+                            <input type="text" id="menu-search-input" placeholder="Search menu (e.g. Pad Thai, Spring Roll...)" aria-label="Search menu items">
+                            <button class="clear-search-btn" id="clear-search-btn" aria-label="Clear search" style="display: none;">
+                                <i data-lucide="x" stroke-width="1.5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="filter-controls-row">
+                        <div class="categories-filter-wrapper" id="categories-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                        <div class="slider-nav-arrows">
+                            <button class="arrow-btn" id="slide-left-btn" aria-label="Slide left">
+                                <i data-lucide="chevron-left" stroke-width="1.5"></i>
+                            </button>
+                            <button class="arrow-btn" id="slide-right-btn" aria-label="Slide right">
+                                <i data-lucide="chevron-right" stroke-width="1.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Snap Slider Menu List -->
+                <div class="menu-grid" id="menu-grid">
+                    <div class="menu-loading">
+                        <div class="spinner"></div>
+                        <p>Choreographing menu selections...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FRAME 10: Location & Contact -->
+        <section class="frame info-contact-slide" data-duration="8000" id="frame-9">
+            <div class="frame-content contact-grid">
+                <div class="contact-text">
+                    <span class="eyebrow-tag">Visit Every Thai</span>
+                    <h2 class="contact-title" style="font-size: 2.8rem; margin-bottom: 8px;">Locations & Hours</h2>
+                    <p class="contact-desc">Stop by our Philadelphia kitchen or check out securely online.</p>
+                    
+                    <div class="contact-details-list">
+                        <div class="contact-detail-item">
+                            <div class="detail-icon"><i data-lucide="map-pin" stroke-width="1.5"></i></div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Philadelphia, PA, USA</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail-item">
+                            <div class="detail-icon"><i data-lucide="mail" stroke-width="1.5"></i></div>
+                            <div>
+                                <h4>Email Support</h4>
+                                <p><a href="mailto:Everythaiphilly@hotmail.com">Everythaiphilly@hotmail.com</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-detail-item">
+                            <div class="detail-icon"><i data-lucide="share-2" stroke-width="1.5"></i></div>
+                            <div>
+                                <h4>Social Networks</h4>
+                                <div class="social-links-row">
+                                    <a href="https://www.facebook.com/people/Every-Thai/100092712366899/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                        <i data-lucide="facebook" stroke-width="1.5"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/everythaiphilly/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                        <i data-lucide="instagram" stroke-width="1.5"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-hours-card-wrapper">
+                    <div class="double-bezel-outer">
+                        <div class="double-bezel-inner hours-card">
+                            <h3>Operating Hours</h3>
+                            <div class="hours-line">
+                                <span>Monday - Friday</span>
+                                <span>11:30 AM - 9:30 PM</span>
+                            </div>
+                            <div class="hours-line">
+                                <span>Saturday</span>
+                                <span>12:00 PM - 10:00 PM</span>
+                            </div>
+                            <div class="hours-line">
+                                <span>Sunday</span>
+                                <span>12:00 PM - 9:00 PM</span>
+                            </div>
+                            <p class="hours-notice"><i data-lucide="info" stroke-width="1.5"></i> Order entries close 15 minutes before kitchen lock.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Floating Playback Controls Pill Dock -->
+    <div class="playback-controls-dock">
+        <button id="dock-prev-btn" title="Previous Frame">‹</button>
+        <button id="dock-play-btn" title="Play / Pause">⏸</button>
+        <button id="dock-next-btn" title="Next Frame">›</button>
+        <span id="dock-counter-val">01 / 10</span>
+    </div>
+
+    <!-- Cart Sidebar Drawer -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Order Selection</h3>
+            <button class="cart-close" id="cart-close-btn" aria-label="Close cart">
+                <i data-lucide="x" stroke-width="1.5"></i>
+            </button>
+        </div>
+        <div class="cart-content" id="cart-items-container">
+            <div class="empty-cart-state">
+                <i data-lucide="shopping-bag" stroke-width="1.5"></i>
+                <p>Your bag is empty.</p>
+                <button class="btn btn-pill-secondary btn-sm" id="empty-cart-browse">Browse Menu</button>
+            </div>
+        </div>
+        <div class="cart-footer" id="cart-footer">
+            <div class="cart-summary-row">
+                <span>Subtotal (Estimated)</span>
+                <span class="subtotal-amount" id="cart-subtotal-val">$0.00</span>
+            </div>
+            <p class="cart-disclaimer">Final customizations and protein adjustments will compile inside the secure checkout portal.</p>
+            <a href="https://order.online/store/25852624?pickup=true&redirected=true" target="_blank" rel="noopener noreferrer" class="btn btn-pill-primary w-full text-center">
+                <span>Proceed to Checkout</span>
+                <span class="btn-arrow-circle"><i data-lucide="arrow-up-right" stroke-width="1.5"></i></span>
+            </a>
+        </div>
+    </div>
+    <div class="overlay" id="cart-overlay"></div>
+
+    <!-- Dish Details Modal -->
+    <div class="dish-modal" id="dish-modal">
+        <div class="dish-modal-container">
+            <button class="dish-modal-close" id="dish-modal-close-btn" aria-label="Close modal">
+                <i data-lucide="x" stroke-width="1.5"></i>
+            </button>
+            <div class="dish-modal-layout">
+                <div class="dish-modal-media" id="dish-modal-img-container">
+                    <!-- High-res food photo goes here -->
+                </div>
+                <div class="dish-modal-details">
+                    <div class="dish-modal-header">
+                        <span class="eyebrow-tag" id="dish-modal-category">Category</span>
+                        <h2 id="dish-modal-name">Dish Name</h2>
+                        <span class="dish-modal-price" id="dish-modal-price">$0.00</span>
+                    </div>
+                    <p class="dish-modal-desc" id="dish-modal-desc">Detailed recipe description...</p>
+                    
+                    <div class="dish-modal-options" id="dish-modal-options-section">
+                        <h4>Customize Protein / Add-ons</h4>
+                        <div class="addons-list">
+                            <div class="addon-option-line">
+                                <span>Mixed Veggie / Tofu</span>
+                                <span>+$1.65</span>
+                            </div>
+                            <div class="addon-option-line">
+                                <span>Chicken</span>
+                                <span>+$2.20</span>
+                            </div>
+                            <div class="addon-option-line">
+                                <span>Beef</span>
+                                <span>+$3.30</span>
+                            </div>
+                            <div class="addon-option-line">
+                                <span>Shrimp</span>
+                                <span>+$4.40</span>
+                            </div>
+                            <div class="addon-option-line">
+                                <span>Seafood (Shrimp, Squid, Mussel)</span>
+                                <span>+$8.80</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dish-modal-footer">
+                        <div class="dish-modal-tags" id="dish-modal-tags">
+                            <!-- tags -->
+                        </div>
+                        <button class="btn btn-pill-primary" id="dish-modal-add-btn">
+                            <span>Add to Order Selection</span>
+                            <span class="btn-arrow-circle"><i data-lucide="plus" stroke-width="1.5"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" id="dish-modal-overlay"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="app.js"></script>
+    <script>
+        // Init Lucide icon library
+        lucide.createIcons();
+    </script>
+</body>
+</html>
