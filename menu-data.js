@@ -3,7 +3,7 @@ const greenCurryImg = './assets/green-curry.jpg';
 const padThaiImg = './assets/pad-thai.jpg';
 const mangoStickyRiceImg = './assets/mango-sticky-rice.jpg';
 
-export const MENU_DATA = [
+const MENU_DATA = [
     // APPETIZERS
     {
         id: "pork-spring-roll",

@@ -1,4 +1,4 @@
-import { MENU_DATA } from './menu-data.js';
+
 
 // Global Application State
 const state = {
